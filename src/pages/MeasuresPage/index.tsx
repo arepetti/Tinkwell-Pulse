@@ -1,31 +1,29 @@
-import React, { useCallback, useState } from 'react';
-import useTimer from '@/hooks/useTimer';
-import { find , type Measure } from '@/services/storeService';
-import MeasureList from './MeasureList';
+import React, { useCallback, useState } from "react";
+import useTimer from "@/hooks/useTimer";
+import { find, type Measure } from "@/services/storeService";
+import MeasureList from "./MeasureList";
 
 const UPDATE_INTERVAL = 30_000;
 
 const MeasuresPage: React.FC = () => {
-  const [measures, setMeasures] = useState<Measure[]>([]);
+    const [measures, setMeasures] = useState<Measure[]>([]);
 
-  const handleTimerTick = useCallback(() => {
-    find().then(result => {
-      if (result.status === 'success') {
-        setMeasures(result.data);
-        console.info(result.data);
-      }
+    const handleTimerTick = useCallback(() => {
+        find().then((result) => {
+            if (result.status === "success") {
+                setMeasures(result.data);
+                console.info(result.data);
+            }
+        });
+    }, []);
+
+    useTimer({
+        initialDelay: 0,
+        interval: UPDATE_INTERVAL,
+        callback: handleTimerTick,
     });
-  }, []);
 
-  useTimer({
-    initialDelay: 0,
-    interval: UPDATE_INTERVAL,
-    callback: handleTimerTick
-  });
-
-  return (
-    <MeasureList data={measures} />
-  );
+    return <MeasureList data={measures} />;
 };
 
 MeasuresPage.displayName = "MeasuresPage";

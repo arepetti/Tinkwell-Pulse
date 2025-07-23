@@ -1,8 +1,8 @@
-import React, { useMemo } from 'react';
-import { Card, CardContent, Typography } from '@mui/material';
-import { type Runner } from '@/services/healthCheckService';
-import ResourceUsageChart from './ResourceUsageChart';
-import { SparkLineChart } from '@mui/x-charts';
+import React, { useMemo } from "react";
+import { Card, CardContent, Typography } from "@mui/material";
+import { type Runner } from "@/services/healthCheckService";
+import ResourceUsageChart from "./ResourceUsageChart";
+import { SparkLineChart } from "@mui/x-charts";
 
 const HISTORY_LENGTH = 64;
 
@@ -11,15 +11,16 @@ export type Sample = Runner["resources"] & { id: number };
 export function appendSample(history: Sample[], runners: Runner[]) {
     let newHistory = enforceLength([...history, createSample()]);
     newHistory.forEach((item, index) => {
-        if (item !== null)
-            item.id = index;
+        if (item !== null) item.id = index;
     });
-    return newHistory
+    return newHistory;
 
     function enforceLength(array: Sample[]) {
         return array
             .slice(-HISTORY_LENGTH)
-            .concat(Array(Math.max(HISTORY_LENGTH - array.length, 0)).fill(null));
+            .concat(
+                Array(Math.max(HISTORY_LENGTH - array.length, 0)).fill(null),
+            );
     }
 
     function createSample(): Sample {
@@ -32,7 +33,14 @@ export function appendSample(history: Sample[], runners: Runner[]) {
                 acc.handleCount += item.resources.handleCount;
                 return acc;
             },
-            { id: 0, cpuUtilization: 0, memoryUsage: 0, peakMemoryUsage: 0, threadCount: 0, handleCount: 0 }
+            {
+                id: 0,
+                cpuUtilization: 0,
+                memoryUsage: 0,
+                peakMemoryUsage: 0,
+                threadCount: 0,
+                handleCount: 0,
+            },
         );
     }
 }
@@ -47,28 +55,61 @@ export interface IInsightProps {
     history: Sample[];
 }
 
-export const Insight: React.FC<IInsightProps> = ({ label, description, unit, round, dataKey, current, history }) => {
-    const trend = useMemo(() => history.map(x => x === null ? 0 : round ? Math.round(x[dataKey]) : x[dataKey]), [history]);
+export const Insight: React.FC<IInsightProps> = ({
+    label,
+    description,
+    unit,
+    round,
+    dataKey,
+    current,
+    history,
+}) => {
+    const trend = useMemo(
+        () =>
+            history.map((x) =>
+                x === null ? 0 : round ? Math.round(x[dataKey]) : x[dataKey],
+            ),
+        [history],
+    );
     const data = useMemo(() => {
-        return current.map(x => ({ id: x.name, value: Math.max(0.1, x.resources[dataKey]), label: x.name }));
+        return current.map((x) => ({
+            id: x.name,
+            value: Math.max(0.1, x.resources[dataKey]),
+            label: x.name,
+        }));
     }, [current]);
 
     const sum = Math.round(data.reduce((acc, curr) => acc + curr.value, 0));
-    const min = Math.floor(trend.reduce((acc, curr) => (curr !== null && curr < acc!) ? curr : acc, Number.MAX_VALUE)! * 0.8);
-    const max = Math.ceil(trend.reduce((acc, curr) => (curr !== null && curr > acc!) ? curr : acc, Number.MIN_VALUE)! * 1.1);
+    const min = Math.floor(
+        trend.reduce(
+            (acc, curr) => (curr !== null && curr < acc! ? curr : acc),
+            Number.MAX_VALUE,
+        )! * 0.8,
+    );
+    const max = Math.ceil(
+        trend.reduce(
+            (acc, curr) => (curr !== null && curr > acc! ? curr : acc),
+            Number.MIN_VALUE,
+        )! * 1.1,
+    );
 
     const value = unit === undefined ? `${sum}` : `${sum} ${unit}`;
 
     return (
         <Card variant="outlined">
             <CardContent>
-                <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>
+                <Typography
+                    gutterBottom
+                    sx={{ color: "text.secondary", fontSize: 14 }}
+                >
                     {description}
                 </Typography>
                 <Typography variant="h5" component="div">
                     {label}
                 </Typography>
-                <Typography sx={{ color: 'text.secondary', mb: 1.5 }}>{unit ?? "#"}</Typography>
+                <Typography sx={{ color: "text.secondary", mb: 1.5 }}>
+                    {unit ?? "#"}
+                </Typography>
                 <ResourceUsageChart title={value} data={data} />
                 <SparkLineChart
                     curve="monotoneX"
@@ -85,7 +126,7 @@ export const Insight: React.FC<IInsightProps> = ({ label, description, unit, rou
             </CardContent>
         </Card>
     );
-}
+};
 
 Insight.displayName = "Insight";
 export default Insight;

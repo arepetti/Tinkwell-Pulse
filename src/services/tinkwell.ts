@@ -1,4 +1,9 @@
-export type Services = "discovery" | "orchestrator" | "watchdog" | "store" | "events";
+export type Services =
+    | "discovery"
+    | "orchestrator"
+    | "watchdog"
+    | "store"
+    | "events";
 
 export type ServiceMemberInfo = {
     readonly $: Services;
@@ -14,48 +19,56 @@ export type ServiceInfo = {
 
 export const Tinkwell: Record<Services, ServiceInfo> = {
     discovery: {
-        path: '/v1/discovery/',
+        path: "/v1/discovery/",
         name: "Tinkwell.Discovery",
-        methods: { 
-            "find": { $: "discovery", $$: "find" }
-         }
+        methods: {
+            find: { $: "discovery", $$: "find" },
+        },
     },
     orchestrator: {
-        path: '/v1/orchestrator/',
+        path: "/v1/orchestrator/",
         name: "Tinkwell.Orchestrator",
         methods: {
-            "list": { $: "orchestrator", $$: "list" },
-            "start": { $: "orchestrator", $$: "start" },
-            "stop": { $: "orchestrator", $$: "stop" },
-            "restart": { $: "orchestrator", $$: "restart" },
-        }
+            list: { $: "orchestrator", $$: "list" },
+            start: { $: "orchestrator", $$: "start" },
+            stop: { $: "orchestrator", $$: "stop" },
+            restart: { $: "orchestrator", $$: "restart" },
+        },
     },
     watchdog: {
-        path: '/v1/watchdog/',
+        path: "/v1/watchdog/",
         name: "Tinkwell.Watchdog",
         methods: {
-            "list": { $: "watchdog", $$: "list" },
-            "assess": { $: "watchdog", $$: "assess" },
-        }
+            list: { $: "watchdog", $$: "list" },
+            assess: { $: "watchdog", $$: "assess" },
+        },
     },
     store: {
-        path: '/v1/store/',
+        path: "/v1/store/",
         name: "Tinkwell.Store",
         methods: {
-            "find": { $: "store", $$: "find", stream: "yes" },
-            "search": { $: "store", $$: "search", stream: "yes" },
-            "update": { $: "store", $$: "update" },
-            "set": { $: "store", $$: "set" },
-            "subscribe": { $: "store", $$: "subscribe", stream: "infinite" },
-        }
+            find: { $: "store", $$: "find", stream: "yes" },
+            search: { $: "store", $$: "search", stream: "yes" },
+            update: { $: "store", $$: "update" },
+            set: { $: "store", $$: "set" },
+            subscribe: { $: "store", $$: "subscribe", stream: "infinite" },
+        },
     },
     events: {
-        path: '/v1/events/',
+        path: "/v1/events/",
         name: "Tinkwell.EventsGateway",
         methods: {
-            "publish": { $: "events", $$: "publish" },
-            "subscribeTopic": { $: "events", $$: "subscribe-topic", stream: "infinite" },
-            "subscribeMatching": { $: "events", $$: "subscribe-matching", stream: "infinite" },
-        }
+            publish: { $: "events", $$: "publish" },
+            subscribeTopic: {
+                $: "events",
+                $$: "subscribe-topic",
+                stream: "infinite",
+            },
+            subscribeMatching: {
+                $: "events",
+                $$: "subscribe-matching",
+                stream: "infinite",
+            },
+        },
     },
 };

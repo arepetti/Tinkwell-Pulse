@@ -1,8 +1,8 @@
-import { Tooltip, Typography, Stack, Badge } from '@mui/material';
-import NumberTypeIcon from '@mui/icons-material/Sensors';
-import StringTypeIcon from '@mui/icons-material/Abc';
-import type { Measure } from '@/services/storeService';
-import { pascalToTitle } from './utils';
+import { Tooltip, Typography, Stack, Badge } from "@mui/material";
+import NumberTypeIcon from "@mui/icons-material/Sensors";
+import StringTypeIcon from "@mui/icons-material/Abc";
+import type { Measure } from "@/services/storeService";
+import { pascalToTitle } from "./utils";
 
 export const Name: React.FC<{ measure: Measure }> = ({ measure }) => {
     let description = "";
@@ -15,7 +15,8 @@ export const Name: React.FC<{ measure: Measure }> = ({ measure }) => {
         description += "\n" + measure.tags.join(", ");
     }
 
-    let attributesColor: React.ComponentProps<typeof Badge>["color"] = "primary";
+    let attributesColor: React.ComponentProps<typeof Badge>["color"] =
+        "primary";
     let attributesDescription = pascalToTitle(measure.type);
     if (measure.isConstant) {
         attributesColor = "success";
@@ -29,7 +30,11 @@ export const Name: React.FC<{ measure: Measure }> = ({ measure }) => {
         <Stack direction="row" spacing={1}>
             <Tooltip title={attributesDescription}>
                 <Badge color={attributesColor} variant="dot">
-                    {measure.type === "number" ? <NumberTypeIcon /> : <StringTypeIcon />}
+                    {measure.type === "number" ? (
+                        <NumberTypeIcon />
+                    ) : (
+                        <StringTypeIcon />
+                    )}
                 </Badge>
             </Tooltip>
             <Tooltip title={description}>

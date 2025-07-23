@@ -1,13 +1,10 @@
-import React, { useEffect } from 'react';
-import EventList from './EventList';
+import React, { useEffect } from "react";
+import EventList from "./EventList";
 
 const EventsPage: React.FC = () => {
-  useEffect(() => {
-  }, []);
+    useEffect(() => {}, []);
 
-  return (
-    <EventList data={null!} />
-  );
+    return <EventList data={null!} />;
 };
 
 EventsPage.displayName = "EventsPage";
