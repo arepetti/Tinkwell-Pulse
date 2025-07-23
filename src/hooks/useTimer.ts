@@ -14,14 +14,17 @@ export function useTimer({
     const intervalRef = useRef<number | null>(null);
     const timeoutRef = useRef<number | null>(null);
 
+    // Workaround for Dev Mode with StrictMode post React 18
+    const realInitialDelay = Math.max(50, initialDelay);
+
     useEffect(() => {
-        if (initialDelay >= interval || initialDelay < 0) {
+        if (realInitialDelay >= interval || realInitialDelay < 0) {
             intervalRef.current = window.setInterval(callback, interval);
         } else {
-            if (initialDelay === 0) {
+            if (realInitialDelay === 0) {
                 callback();
             } else {
-                timeoutRef.current = window.setTimeout(callback, initialDelay);
+                timeoutRef.current = window.setTimeout(callback, realInitialDelay);
             }
             intervalRef.current = window.setInterval(callback, interval);
         }

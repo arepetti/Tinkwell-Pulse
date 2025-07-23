@@ -1,10 +1,22 @@
-import React, { useEffect } from "react";
+import React, { useCallback } from "react";
 import EventList from "./EventList";
+import { subscribeAll, type SystemEvent } from "@/services/eventsService";
+import { useDebouncedMount } from "@/hooks/useDebouncedMount";
 
 const EventsPage: React.FC = () => {
-    useEffect(() => {}, []);
+    const handleMessage = useCallback((event: SystemEvent) => {
+        console.info(event);
+    }, []);
 
-    return <EventList data={null!} />;
+    useDebouncedMount(() => {
+        const controller = new AbortController();
+        subscribeAll(controller, handleMessage);
+        return () => {
+            controller.abort();
+        }
+    });
+
+    return <div>test</div>;
 };
 
 EventsPage.displayName = "EventsPage";
