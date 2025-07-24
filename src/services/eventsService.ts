@@ -6,6 +6,7 @@ export type SystemEvent = {
     readonly correlationId: string;
     readonly timestamp: Date;
     readonly topic: string;
+    readonly subject: string;
     readonly verb: string;
     readonly object: string;
     readonly payload?: string;

@@ -7,10 +7,11 @@ import {
     TableBody,
     Container,
 } from "@mui/material";
-import type { Measure } from "@/services/storeService";
+import type { SystemEvent } from "@/services/eventsService";
+import Timestamp from "@/components/Timestamp";
 
 export interface IResourceUsageTableProps {
-    data: Measure[];
+    data: SystemEvent[];
 }
 
 const EventList: React.FC<IResourceUsageTableProps> = ({ data }) => (
@@ -23,18 +24,18 @@ const EventList: React.FC<IResourceUsageTableProps> = ({ data }) => (
                     <TableCell>Subject</TableCell>
                     <TableCell>Verb</TableCell>
                     <TableCell>Object</TableCell>
-                    <TableCell>Payload</TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
-                {data.map((m) => (
-                    <TableRow key={m.name}>
-                        <TableCell component="th" scope="row"></TableCell>
-                        <TableCell></TableCell>
-                        <TableCell></TableCell>
-                        <TableCell></TableCell>
-                        <TableCell></TableCell>
-                        <TableCell></TableCell>
+                {data.map((ev) => (
+                    <TableRow key={ev.id}>
+                        <TableCell>
+                            <Timestamp value={ev.timestamp} />
+                        </TableCell>
+                        <TableCell>{ev.topic}</TableCell>
+                        <TableCell>{ev.subject}</TableCell>
+                        <TableCell>{ev.verb}</TableCell>
+                        <TableCell>{ev.object}</TableCell>
                     </TableRow>
                 ))}
             </TableBody>
