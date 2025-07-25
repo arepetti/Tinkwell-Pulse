@@ -32,7 +32,7 @@ export const Insight: React.FC<IInsightProps> = ({
             history.map((x) =>
                 x === null ? 0 : round ? Math.round(x[dataKey]) : x[dataKey],
             ),
-        [history],
+        [history, dataKey, round],
     );
     const data = useMemo(() => {
         return current.map((x) => ({
@@ -40,7 +40,7 @@ export const Insight: React.FC<IInsightProps> = ({
             value: Math.max(0.1, x.resources[dataKey]),
             label: x.name,
         }));
-    }, [current]);
+    }, [current, dataKey]);
 
     const sum = Math.round(data.reduce((acc, curr) => acc + curr.value, 0));
     const min = Math.floor(

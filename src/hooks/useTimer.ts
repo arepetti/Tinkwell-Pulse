@@ -24,7 +24,7 @@ export function useTimer({
         } else {
             timeoutRef.current = window.setTimeout(() => {
                 callback(); // Call after initial delay
-                intervalRef.current = window.setInterval(callback, interval); // Start interval after initial delay
+                intervalRef.current = window.setInterval(callback, interval);
             }, realInitialDelay);
         }
 
@@ -33,10 +33,10 @@ export function useTimer({
                 clearInterval(intervalRef.current);
             }
             if (timeoutRef.current !== null) {
-                clearTimeout(timeoutRef.current); // Use clearTimeout for setTimeout
+                clearTimeout(timeoutRef.current);
             }
         };
-    }, [initialDelay, interval, callback]);
+    }, [realInitialDelay, interval, callback]);
 }
 
 export default useTimer;

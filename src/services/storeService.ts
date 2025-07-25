@@ -16,7 +16,7 @@ export type Measure = Omit<ApiMeasureDefinition, "type" | "attributes"> &
     };
 
 export async function find(): Promise<ApiResponse<Measure[]>> {
-    var response = await callTinkwell<ApiMeasure[]>(
+    const response = await callTinkwell<ApiMeasure[]>(
         Tinkwell.store.methods.find,
     );
     if (response.status === "success")
@@ -71,7 +71,7 @@ function translateMeasure(input: ApiMeasure): Measure {
         createdAt: new Date(input.metadata.createdAt),
         description: input.metadata.description,
         tags: input.metadata.tags,
-        lastUpdatedAt: !!input.value.timestamp
+        lastUpdatedAt: input.value.timestamp
             ? new Date(input.value.timestamp)
             : new Date(0),
         value: translateValue(input.value),

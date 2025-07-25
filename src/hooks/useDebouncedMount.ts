@@ -17,5 +17,5 @@ export function useDebouncedMount(callback: () => void, delay = 100) {
         timeoutRef.current = null;
       }
     };
-  }, []);
+  }, [callback, delay]);
 }

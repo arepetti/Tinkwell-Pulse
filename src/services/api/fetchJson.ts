@@ -77,7 +77,7 @@ export async function fetchNdJson<T>(
                     const obj = JSON.parse(line);
                     results.push(obj);
                 } catch (e) {
-                    console.warn("Invalid JSON line:", line);
+                    console.warn("Invalid JSON line:", line, ". Reason: ", e);
                 }
             }
         }
@@ -138,8 +138,7 @@ export function streamNdJson<T>(
                 }
             }
         } catch (e) {
-            if (controller.signal.aborted) {
-            } else {
+            if (!controller.signal.aborted) {
                 console.error("Stream error:", e);
                 onError?.(e, true);
             }

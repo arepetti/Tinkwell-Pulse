@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Stack } from "@mui/material";
 import useTimer from "@/hooks/useTimer";
 import { profile, type Runner } from "@/services/healthCheckService";
@@ -60,7 +60,7 @@ DashboardPage.displayName = "DashboardPage";
 export default DashboardPage;
 
 function appendSample(history: Sample[], runners: Runner[]) {
-    let newHistory = enforceLength([...history, createSample()]);
+    const newHistory = enforceLength([...history, createSample()])
     newHistory.forEach((item, index) => {
         if (item !== null) item.id = index;
     });
