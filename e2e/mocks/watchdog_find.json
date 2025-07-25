@@ -1,0 +1,69 @@
+{
+    "runners": [
+        {
+            "name": "measures",
+            "timestamp": "2025-07-25T14:16:12.422851600Z",
+            "quality": "ACCEPTABLE",
+            "status": "UNDEFINED",
+            "resources": {
+                "cpuUtilization": 0,
+                "memoryUsage": 62.4,
+                "peakMemoryUsage": 80.4,
+                "threadCount": 14,
+                "handleCount": 568
+            }
+        },
+        {
+            "name": "system",
+            "timestamp": "2025-07-25T14:16:12.422935Z",
+            "quality": "GOOD",
+            "status": "SERVING",
+            "resources": {
+                "cpuUtilization": 0,
+                "memoryUsage": 95.2,
+                "peakMemoryUsage": 104.5,
+                "threadCount": 34,
+                "handleCount": 660
+            }
+        },
+        {
+            "name": "www",
+            "timestamp": "2025-07-25T14:16:12.422974Z",
+            "quality": "ACCEPTABLE",
+            "status": "UNDEFINED",
+            "resources": {
+                "cpuUtilization": 0,
+                "memoryUsage": 55.9,
+                "peakMemoryUsage": 64.8,
+                "threadCount": 29,
+                "handleCount": 558
+            }
+        },
+        {
+            "name": "Supervisor*",
+            "timestamp": "2025-07-25T14:16:12.422998300Z",
+            "quality": "ACCEPTABLE",
+            "status": "UNDEFINED",
+            "resources": {
+                "cpuUtilization": 0,
+                "memoryUsage": 42.1,
+                "peakMemoryUsage": 56.7,
+                "threadCount": 10,
+                "handleCount": 375
+            }
+        },
+        {
+            "name": "watchdog",
+            "timestamp": "2025-07-25T14:16:12.423015600Z",
+            "quality": "ACCEPTABLE",
+            "status": "UNDEFINED",
+            "resources": {
+                "cpuUtilization": 0,
+                "memoryUsage": 89.3,
+                "peakMemoryUsage": 96.3,
+                "threadCount": 34,
+                "handleCount": 866
+            }
+        }
+    ]
+}

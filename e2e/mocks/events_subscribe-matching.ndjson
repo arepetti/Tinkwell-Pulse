@@ -1,0 +1,2 @@
+{"id":"cd43adcf-3f42-4f66-b16f-81986741489d","topic":"signal","subject":"power","verb":"TRIGGERED","object":"overload","payload":"","correlationId":"c2bf81d6-6b1f-4e36-b355-299b778fd041","occurredAt":"2025-07-25T14:19:54.182097Z"}
+{"id":"another-id","topic":"signal","subject":"voltage","verb":"CLEARED","object":"undervoltage","payload":"","correlationId":"another-correlation-id","occurredAt":"2025-07-25T14:20:00.000Z"}

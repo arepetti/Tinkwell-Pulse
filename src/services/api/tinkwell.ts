@@ -11,13 +11,13 @@ export type ServiceMemberInfo = {
     readonly stream?: "no" | "yes" | "infinite";
 };
 
-export type ServiceInfo = {
+export type ServiceInfo<M extends Record<string, ServiceMemberInfo>> = {
     readonly name: string;
     readonly path: string;
-    readonly methods: Record<string, ServiceMemberInfo>;
+    readonly methods: M;
 };
 
-export const Tinkwell: Record<Services, ServiceInfo> = {
+export const Tinkwell = {
     discovery: {
         path: "/v1/discovery/",
         name: "Tinkwell.Discovery",
@@ -71,4 +71,4 @@ export const Tinkwell: Record<Services, ServiceInfo> = {
             },
         },
     },
-};
+} as const;

@@ -1,5 +1,4 @@
-import { callTinkwell, type ApiResponse } from "./api";
-import { Tinkwell } from "./tinkwell";
+import { Tinkwell, callTinkwell, type ApiResponse } from "./api";
 
 export type MeasureValue =
     | { type: "undefined" }

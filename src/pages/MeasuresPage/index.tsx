@@ -5,14 +5,13 @@ import MeasureList from "./MeasureList";
 
 const UPDATE_INTERVAL = 30_000;
 
-const MeasuresPage: React.FC = () => {
+export const MeasuresPage: React.FC = () => {
     const [measures, setMeasures] = useState<Measure[]>([]);
 
     const handleTimerTick = useCallback(() => {
         find().then((result) => {
             if (result.status === "success") {
                 setMeasures(result.data);
-                console.info(result.data);
             }
         });
     }, []);

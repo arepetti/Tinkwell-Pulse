@@ -1,0 +1,94 @@
+name: Release and bump version
+
+permissions:
+  contents: write
+  pull-requests: write
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build-publish-zip:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build application
+        run: npm run build
+
+      - name: Run smoke tests
+        run: npm run test:smoke
+
+      - name: Archive published output
+        run: |
+          cd dist
+          zip -r ../tinkwell-pulse-${{ github.event.release.tag_name }}.zip .
+
+      - name: Attach ZIP artifact to Release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: tinkwell-pulse-${{ github.event.release.tag_name }}.zip
+          asset_name: tinkwell-pulse-${{ github.event.release.tag_name }}.zip
+          asset_content_type: application/zip
+
+  bump-version:
+    needs: build-publish-zip
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout with full history
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+
+      - name: Bump patch version in package.json
+        id: version
+        run: |
+          current=$(jq -r .version package.json)
+          major=${current%%.*}
+          rest=${current#"$major."}
+          minor=${rest%%.*}
+          patch=${rest#"$minor."}
+          new="$major.$minor.$((patch + 1))"
+          echo "Version bump: $current → $new"
+          echo "$new" >> $GITHUB_OUTPUT
+          jq ".version=\"$new\"" package.json > temp.json && mv temp.json package.json
+
+      - name: Commit and push version bump
+        run: |
+          git checkout -b bump-version-${{ steps.version.outputs.version }}
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add package.json
+          git commit -m "chore: bump version to ${{ steps.version.outputs.version }}"
+          git push origin HEAD --set-upstream
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "Bump version to ${{ steps.version.outputs.version }}"
+          branch: bump-version-${{ steps.version.outputs.version }}
+          delete-branch: true
+          title: "[skip ci] Bump version to ${{ steps.version.outputs.version }}"
+          body: |
+            Version bumped to ${{ steps.version.outputs.version }} because
+            ${{ github.event.release.tag_name }} has been released.
+          labels: automated
+          merge-method: squash
+          auto-merge: true

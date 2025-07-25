@@ -4,46 +4,9 @@ import { type Runner } from "@/services/healthCheckService";
 import ResourceUsageChart from "./ResourceUsageChart";
 import { SparkLineChart } from "@mui/x-charts";
 
-const HISTORY_LENGTH = 64;
+export const HISTORY_LENGTH = 64;
 
 export type Sample = Runner["resources"] & { id: number };
-
-export function appendSample(history: Sample[], runners: Runner[]) {
-    let newHistory = enforceLength([...history, createSample()]);
-    newHistory.forEach((item, index) => {
-        if (item !== null) item.id = index;
-    });
-    return newHistory;
-
-    function enforceLength(array: Sample[]) {
-        return array
-            .slice(-HISTORY_LENGTH)
-            .concat(
-                Array(Math.max(HISTORY_LENGTH - array.length, 0)).fill(null),
-            );
-    }
-
-    function createSample(): Sample {
-        return runners.reduce(
-            (acc, item) => {
-                acc.cpuUtilization += item.resources.cpuUtilization;
-                acc.memoryUsage += item.resources.memoryUsage;
-                acc.peakMemoryUsage += item.resources.peakMemoryUsage;
-                acc.threadCount += item.resources.threadCount;
-                acc.handleCount += item.resources.handleCount;
-                return acc;
-            },
-            {
-                id: 0,
-                cpuUtilization: 0,
-                memoryUsage: 0,
-                peakMemoryUsage: 0,
-                threadCount: 0,
-                handleCount: 0,
-            },
-        );
-    }
-}
 
 export interface IInsightProps {
     label: string;
