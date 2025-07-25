@@ -14,7 +14,7 @@ export interface IResourceUsageTableProps {
     data: SystemEvent[];
 }
 
-const EventList: React.FC<IResourceUsageTableProps> = ({ data }) => (
+export const EventList: React.FC<IResourceUsageTableProps> = ({ data }) => (
     <TableContainer component={Container}>
         <Table sx={{ minWidth: 650 }}>
             <TableHead>

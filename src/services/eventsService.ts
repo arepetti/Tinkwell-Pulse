@@ -1,5 +1,4 @@
-import { callTinkwell, subscribeTinkwell, type StreamMessageHandler } from "./api";
-import { Tinkwell } from "./tinkwell";
+import { Tinkwell, callTinkwell, subscribeTinkwell, type StreamMessageHandler } from "./api";
 
 export type SystemEvent = {
     readonly id: string;
@@ -23,7 +22,7 @@ export type PublishEventResponse = {
 
 export function publish(request: PublishEventRequest) {
     return callTinkwell<PublishEventResponse>(
-        Tinkwell.watchdog.methods.list,
+        Tinkwell.events.methods.publish,
         request,
     );
 }

@@ -8,8 +8,8 @@ import {
     TableBody,
     Avatar,
     styled,
-    type TableRowProps,
     Container,
+    type TableRowProps,
 } from "@mui/material";
 import RunnerServingIcon from "@mui/icons-material/DirectionsRunOutlined";
 import RunnerDegradedIcon from "@mui/icons-material/DirectionsWalkOutlined";
@@ -26,44 +26,7 @@ export interface IResourceUsageTableProps {
     data: Runner[];
 }
 
-const statusColors: Record<ServiceStatus, string> = {
-    UNDEFINED: green[300],
-    UNKNOWN: green[300],
-    SERVING: green[500],
-    DEGRADED: amber[500],
-    CRASHED: red[500],
-};
-
-const statusIcon: Record<ServiceStatus, React.ReactElement> = {
-    UNDEFINED: <RunnerServingIcon />,
-    UNKNOWN: <RunnerServingIcon />,
-    SERVING: <RunnerServingIcon />,
-    DEGRADED: <RunnerDegradedIcon />,
-    CRASHED: <RunnerCrashedIcon />,
-};
-
-const qualityLabel: Record<MeasureQuality, string> = {
-    POOR: "Poor",
-    ACCEPTABLE: "Acceptable",
-    GOOD: "Good",
-};
-
-interface IStyledTableRowProps {
-    dimmed?: boolean;
-}
-
-const StyledTableRow = styled(TableRow, {
-    shouldForwardProp: (prop) => prop !== "dimmed",
-})<IStyledTableRowProps & TableRowProps>(({ theme, dimmed }) => ({
-    "& td": {
-        color: dimmed ? theme.palette.text.disabled : "inherit",
-    },
-    "&:last-child td, &:last-child th": {
-        border: 0,
-    },
-}));
-
-const ResourceUsageTable: React.FC<IResourceUsageTableProps> = ({ data }) => (
+export const ResourceUsageTable: React.FC<IResourceUsageTableProps> = ({ data }) => (
     <TableContainer component={Container}>
         <Table sx={{ minWidth: 650 }}>
             <TableHead>
@@ -134,3 +97,40 @@ const ResourceUsageTable: React.FC<IResourceUsageTableProps> = ({ data }) => (
 
 ResourceUsageTable.displayName = "ResourceUsageTable";
 export default ResourceUsageTable;
+
+const statusColors: Record<ServiceStatus, string> = {
+    UNDEFINED: green[300],
+    UNKNOWN: green[300],
+    SERVING: green[500],
+    DEGRADED: amber[500],
+    CRASHED: red[500],
+};
+
+const statusIcon: Record<ServiceStatus, React.ReactElement> = {
+    UNDEFINED: <RunnerServingIcon />,
+    UNKNOWN: <RunnerServingIcon />,
+    SERVING: <RunnerServingIcon />,
+    DEGRADED: <RunnerDegradedIcon />,
+    CRASHED: <RunnerCrashedIcon />,
+};
+
+const qualityLabel: Record<MeasureQuality, string> = {
+    POOR: "Poor",
+    ACCEPTABLE: "Acceptable",
+    GOOD: "Good",
+};
+
+interface IStyledTableRowProps {
+    dimmed?: boolean;
+}
+
+const StyledTableRow = styled(TableRow, {
+    shouldForwardProp: (prop) => prop !== "dimmed",
+})<IStyledTableRowProps & TableRowProps>(({ theme, dimmed }) => ({
+    "& td": {
+        color: dimmed ? theme.palette.text.disabled : "inherit",
+    },
+    "&:last-child td, &:last-child th": {
+        border: 0,
+    },
+}));

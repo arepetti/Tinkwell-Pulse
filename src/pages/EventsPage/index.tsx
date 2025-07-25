@@ -5,7 +5,7 @@ import { useDebouncedMount } from "@/hooks/useDebouncedMount";
 
 const HISTORY_LENGTH = 64;
 
-const EventsPage: React.FC = () => {
+export const EventsPage: React.FC = () => {
     const [events, setEvents] = useState<SystemEvent[]>([]);
     const handleMessage = useCallback((event: SystemEvent) => {
         setEvents(old => prependEvent(old, event))
@@ -25,6 +25,6 @@ const EventsPage: React.FC = () => {
 EventsPage.displayName = "EventsPage";
 export default EventsPage;
 
-export function prependEvent(history: SystemEvent[], event: SystemEvent) {
+function prependEvent(history: SystemEvent[], event: SystemEvent) {
     return [event, ...history].slice(-HISTORY_LENGTH)
 }

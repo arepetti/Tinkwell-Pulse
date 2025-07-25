@@ -1,0 +1,3 @@
+{"definition":{"attributes":1,"type":"NUMBER","name":"current","quantityType":"ElectricCurrent","unit":"Ampere"},"metadata":{"createdAt":"2025-07-25T10:04:58.566976400Z","tags":[]},"value":{"timestamp":"2025-07-25T10:04:58.588438300Z","numberValue":2}}
+{"definition":{"attributes":2,"type":"NUMBER","name":"power","quantityType":"Power","unit":"Watt"},"metadata":{"createdAt":"2025-07-25T10:04:58.566984Z","tags":[]},"value":{"timestamp":"2025-07-25T10:04:58.629399800Z","numberValue":10}}
+{"definition":{"attributes":1,"type":"NUMBER","name":"voltage","quantityType":"ElectricPotential","unit":"Volt"},"metadata":{"createdAt":"2025-07-25T10:04:58.566351Z","tags":[]},"value":{"timestamp":"2025-07-25T10:04:58.579777400Z","numberValue":5}}

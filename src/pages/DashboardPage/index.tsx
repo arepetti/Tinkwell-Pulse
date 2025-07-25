@@ -2,7 +2,7 @@ import React, { useCallback, useState } from "react";
 import { Stack } from "@mui/material";
 import useTimer from "@/hooks/useTimer";
 import { profile, type Runner } from "@/services/healthCheckService";
-import { Insight, appendSample, type Sample } from "./Insight";
+import { Insight, HISTORY_LENGTH, type Sample } from "./Insight";
 
 const UPDATE_INTERVAL = 15_000;
 
@@ -58,3 +58,40 @@ const DashboardPage: React.FC = () => {
 
 DashboardPage.displayName = "DashboardPage";
 export default DashboardPage;
+
+function appendSample(history: Sample[], runners: Runner[]) {
+    const newHistory = enforceLength([...history, createSample()])
+    newHistory.forEach((item, index) => {
+        if (item !== null) item.id = index;
+    });
+    return newHistory;
+
+    function enforceLength(array: Sample[]) {
+        return array
+            .slice(-HISTORY_LENGTH)
+            .concat(
+                Array(Math.max(HISTORY_LENGTH - array.length, 0)).fill(null),
+            );
+    }
+
+    function createSample(): Sample {
+        return runners.reduce(
+            (acc, item) => {
+                acc.cpuUtilization += item.resources.cpuUtilization;
+                acc.memoryUsage += item.resources.memoryUsage;
+                acc.peakMemoryUsage += item.resources.peakMemoryUsage;
+                acc.threadCount += item.resources.threadCount;
+                acc.handleCount += item.resources.handleCount;
+                return acc;
+            },
+            {
+                id: 0,
+                cpuUtilization: 0,
+                memoryUsage: 0,
+                peakMemoryUsage: 0,
+                threadCount: 0,
+                handleCount: 0,
+            },
+        );
+    }
+}

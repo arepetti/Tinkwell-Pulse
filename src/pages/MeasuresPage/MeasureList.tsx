@@ -17,7 +17,7 @@ export interface IMeasureListProps {
     data: Measure[];
 }
 
-const MeasureList: React.FC<IMeasureListProps> = ({ data }) => (
+export const MeasureList: React.FC<IMeasureListProps> = ({ data }) => (
     <TableContainer component={Container}>
         <Table sx={{ minWidth: 650 }}>
             <TableHead>

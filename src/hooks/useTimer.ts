@@ -18,15 +18,14 @@ export function useTimer({
     const realInitialDelay = Math.max(50, initialDelay);
 
     useEffect(() => {
-        if (realInitialDelay >= interval || realInitialDelay < 0) {
+        if (realInitialDelay === 0) {
+            callback(); // Call immediately if no initial delay
             intervalRef.current = window.setInterval(callback, interval);
         } else {
-            if (realInitialDelay === 0) {
-                callback();
-            } else {
-                timeoutRef.current = window.setTimeout(callback, realInitialDelay);
-            }
-            intervalRef.current = window.setInterval(callback, interval);
+            timeoutRef.current = window.setTimeout(() => {
+                callback(); // Call after initial delay
+                intervalRef.current = window.setInterval(callback, interval);
+            }, realInitialDelay);
         }
 
         return () => {
@@ -34,10 +33,10 @@ export function useTimer({
                 clearInterval(intervalRef.current);
             }
             if (timeoutRef.current !== null) {
-                clearInterval(timeoutRef.current);
+                clearTimeout(timeoutRef.current);
             }
         };
-    }, [initialDelay, interval, callback]);
+    }, [realInitialDelay, interval, callback]);
 }
 
 export default useTimer;

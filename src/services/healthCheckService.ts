@@ -1,5 +1,4 @@
-import { callTinkwell } from "./api";
-import { Tinkwell } from "./tinkwell";
+import { Tinkwell, callTinkwell } from "./api";
 
 export type MeasureQuality = "POOR" | "ACCEPTABLE" | "GOOD";
 export type ServiceStatus =

@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 
 // To be honest this is just a quick workaround for that
 // idiotic idea, introduced by React 18, to mount the same
-// component twice in development mmode with StrictMode enabled.
+// component twice in development mode with StrictMode enabled.
 export function useDebouncedMount(callback: () => void, delay = 100) {
   const timeoutRef = useRef<number | null>(null);
 
@@ -17,5 +17,5 @@ export function useDebouncedMount(callback: () => void, delay = 100) {
         timeoutRef.current = null;
       }
     };
-  }, []);
+  }, [callback, delay]);
 }
