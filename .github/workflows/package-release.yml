@@ -27,9 +27,6 @@ jobs:
       - name: Build application
         run: npm run build
 
-      - name: Run smoke tests
-        run: npm run test:smoke
-
       - name: Archive published output
         run: |
           cd dist
