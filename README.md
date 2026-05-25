@@ -1,5 +1,7 @@
 # Tinkwell Pulse
 
+** This repository has been archived, it uses an old and discontinued pre-release version of Thinkwell**
+
 Web application to monitor a [Tinkwell](https://github.com/arepetti/Tinkwell) installation.
 
 This is both an example about interfacing a web application with Tinkwell and an usable dashboard to monitor and debug an installation.
