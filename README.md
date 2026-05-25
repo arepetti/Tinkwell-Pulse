@@ -1,6 +1,6 @@
 # Tinkwell Pulse
 
-** This repository has been archived, it uses an old and discontinued pre-release version of Thinkwell**
+**This repository has been archived, it uses an old and discontinued pre-release version of Thinkwell**
 
 Web application to monitor a [Tinkwell](https://github.com/arepetti/Tinkwell) installation.
 
